@@ -867,7 +867,7 @@ function checkTextAlignmentChangeXsToMd() {
     const iframes = document.querySelectorAll('iframe');
     let alignmentChangeDetected = false;
 
-    const textAlignMdClasses = ['text-md-left', 'text-md-center', 'text-md-right'];
+    const textAlignMdClasses = ['text-md-left', 'text-md-center', 'text-md-right', 'text-md-start', 'text-md-end'];
 
     iframes.forEach(iframe => {
         const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
@@ -901,7 +901,7 @@ function checkOrderChangeXsToMd() {
     const iframes = document.querySelectorAll('iframe');
     let orderChangeDetected = false;
 
-    const orderMdClasses = [...Array.from({ length: 12 }, (_, i) => `order-md-${i + 1}`)];
+    const orderMdClasses = ['order-md-first', 'order-md-last', ...Array.from({ length: 5 }, (_, i) => `order-md-${i + 1}`)];
 
     iframes.forEach(iframe => {
         const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
@@ -1056,14 +1056,15 @@ function checkFontAwesomeInIframes() {
 
 function countFontAwesomeIconsInIframes() {
     const iframes = document.querySelectorAll('iframe');
-    let totalIcons = 0;
+    let uniqueImages = new Set();
 
     iframes.forEach((iframe) => {
         const iframeDocument = iframe.contentDocument || iframe.contentWindow.document;
         const icons = iframeDocument.querySelectorAll('i[class*="fa-"], span[class*="fa-"]');
-        totalIcons += icons.length;
+        icons.forEach((icon) => uniqueImages.add(icon.className));
     });
 
+    let totalIcons = uniqueImages.size;
     resultat4IconesFontawesome.innerText = `${totalIcons} icones fontawesome détectées`;
     resultat4IconesFontawesome.className = totalIcons >= 4 ? "valid" : "invalid";
 }
@@ -1451,6 +1452,6 @@ window.onload = () => {
     calculresultatFavoris11();
     calculresultatFavoris12();
     calculresultatFavoris13();
-    version.innerText = "Version 1.1";
-    dateheureversion.innerText = "2025-02-25 20H55";
+    version.innerText = "Version 1.3";
+    dateheureversion.innerText = "2025-02-26 12H43";
 }
