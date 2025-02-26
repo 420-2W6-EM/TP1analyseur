@@ -1453,5 +1453,5 @@ window.onload = () => {
     calculresultatFavoris12();
     calculresultatFavoris13();
     version.innerText = "Version 1.4";
-    dateheureversion.innerText = "2025-02-26 13H09";
+    dateheureversion.innerText = "2025-02-26 13H16";
 }
