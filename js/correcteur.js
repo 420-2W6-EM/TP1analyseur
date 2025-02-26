@@ -85,7 +85,6 @@ async function verifierToutesLesTypesDePositionnementUtilisée() {
         let hasAbsolute = false;
         let hasFixed = false;
         let hasAbsoluteWithPosition = false;
-        let hasFixedWithPosition = false;
         
         root.walkDecls(decl => {
             if (decl.prop === 'position') {
@@ -103,20 +102,21 @@ async function verifierToutesLesTypesDePositionnementUtilisée() {
                 parent.walkDecls('position', positionDecl => {
                     if (positionDecl.value === 'absolute') {
                         hasAbsoluteWithPosition = true;
-                    } else if (positionDecl.value === 'fixed') {
-                        hasFixedWithPosition = true;
                     }
                 });
             }
         });
         
-        if (hasRelative && hasAbsolute && hasFixed && hasAbsoluteWithPosition && hasFixedWithPosition) {
+        if (hasRelative && hasAbsolute && hasFixed && hasAbsoluteWithPosition) {
             resultatToutesLesTypesDePositionnementUtilisée.innerText = 'positionnements avec les propriétés de nécessaires trouvés';
             resultatToutesLesTypesDePositionnementUtilisée.className = "valid";
+        } if (hasRelative && hasAbsolute && hasFixed && !hasAbsoluteWithPosition ) {
+            resultatToutesLesTypesDePositionnementUtilisée.innerText = 'positionnement absolute sans left, right, top ou bottom trouvé';
+            resultatToutesLesTypesDePositionnementUtilisée.className = "valid";
         } else {
-            resultatToutesLesTypesDePositionnementUtilisée.innerText = 'positionnements ou propriétés manquant';
+            resultatToutesLesTypesDePositionnementUtilisée.innerText = 'positionnements manquants';
             resultatToutesLesTypesDePositionnementUtilisée.className = "invalid";
-        }
+        } 
 
     }, resultatToutesLesTypesDePositionnementUtilisée);
 }
@@ -713,15 +713,24 @@ function checkColumnClassesUsage() {
 
     iframes.forEach(iframe => {
         const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
-        if (iframeDoc.querySelector('.col')) {
-            colUsed = true;
-        }
-        if (iframeDoc.querySelector('.col-auto')) {
-            colAutoUsed = true;
-        }
-        for (let i = 1; i <= 12; i++) {
-            if (iframeDoc.querySelector(`.col-${i}`)) {
-                colSizeUsed = true;
+        const breakpoints = ['', 'sm', 'md', 'lg', 'xl', 'xxl'];
+
+        for (let bp of breakpoints) {
+            if (iframeDoc.querySelector(`.col${bp ? `-${bp}` : ''}`)) {
+                colUsed = true;
+                break;
+            }
+            if (iframeDoc.querySelector(`.col-auto${bp ? `-${bp}` : ''}`)) {
+                colAutoUsed = true;
+                break;
+            }
+            for (let i = 1; i <= 12; i++) {
+                if (iframeDoc.querySelector(`.col${bp ? `-${bp}` : ''}-${i}`)) {
+                    colSizeUsed = true;
+                    break;
+                }
+            }
+            if (colUsed || colAutoUsed || colSizeUsed) {
                 break;
             }
         }
@@ -1452,6 +1461,6 @@ window.onload = () => {
     calculresultatFavoris11();
     calculresultatFavoris12();
     calculresultatFavoris13();
-    version.innerText = "Version 1.4";
-    dateheureversion.innerText = "2025-02-26 13H16";
+    version.innerText = "Version 1.6";
+    dateheureversion.innerText = "2025-02-26 15H35";
 }
