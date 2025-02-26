@@ -901,7 +901,7 @@ function checkOrderChangeXsToMd() {
     const iframes = document.querySelectorAll('iframe');
     let orderChangeDetected = false;
 
-    const orderMdClasses = ['order-md-first', 'order-md-last', ...Array.from({ length: 5 }, (_, i) => `order-md-${i + 1}`)];
+    const orderMdClasses = ['order-md-first', 'order-md-last', ...Array.from({ length: 6 }, (_, i) => `order-md-${i}`)];
 
     iframes.forEach(iframe => {
         const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
@@ -1452,6 +1452,6 @@ window.onload = () => {
     calculresultatFavoris11();
     calculresultatFavoris12();
     calculresultatFavoris13();
-    version.innerText = "Version 1.3";
-    dateheureversion.innerText = "2025-02-26 12H43";
+    version.innerText = "Version 1.4";
+    dateheureversion.innerText = "2025-02-26 13H09";
 }
