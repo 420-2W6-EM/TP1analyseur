@@ -1,0 +1,98 @@
+@font-face {
+    font-family: 'Hylia';
+    src: url('HyliaSerifBeta-Regular.otf') format('truetype');
+}
+
+td, th {
+    border: 1px solid black;
+}
+
+.valid{
+    background-color: greenyellow;
+}
+
+.invalid{
+    background-color: lightcoral;
+}
+
+.manuel {
+    background-color: yellow;
+}
+
+iframe {
+    width: 100%;
+    height: auto;
+    padding: 2px;
+}
+
+
+#conteneurFrame {
+    display: flex;
+    direction: row;
+    width: 100%;
+}
+
+#conteneurFrame > div {
+    flex: 1;
+}
+
+#entete {
+    display:flex;
+    direction: row;
+    justify-content: center;
+}
+
+table.table td {
+    vertical-align: middle;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+
+:root {
+--bs-body-bg: rgba(61, 154, 183);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td, tr {
+    border: 1px solid black;
+    padding: 8px;
+}
+
+th {
+    font-weight: bold;
+    background-color: rgba(255, 255, 255, 0.842) !important;
+}
+
+td {
+    margin:10em;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: rgb(44, 62, 80);
+    font-family: 'Hylia';
+}
+
+body {
+    background-color: var(--bs-body-bg);
+}
+
+.table>:not(caption)>*>* {
+    background-color: rgba(218, 218, 218, 0.60);
+    border: 1px solid rgba(255, 255, 255, 0.6); 
+    color: rgb(44, 62, 80);
+}
+
+
+#conteneurversion {
+    position:fixed; 
+    top:10px; 
+    right:10px; 
+    border: 1px solid black; 
+    padding: 10px; 
+    text-align: center;
+}

@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TP1 - Analyseur</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css" integrity="sha512-jnSuA4Ss2PkkikSOLtYs8BlYIeeIK1h99ty4YfvRPAlzr377vr3CXDb7sb7eEEBYjDtcYj+AjBH3FLv5uSJuXg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+
+    <div id="conteneurversion">
+        <span id="version"></span><br>
+        <span id="dateheureversion"></span>
+    </div>
+
+    <header class="container">
+        <div class="row align-items-center justify-content-center">
+            <div class="col-2">
+                <img src="images/capybara.png" class="img-fluid">
+            </div>
+            <div class="col-6">
+                <h1>TP1 - Analyseur</h1>
+                <h3>Regarde ton TP à travers les yeux du capy</h3>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="row mt-5">
+            <div class="col">
+                <h2>Les pages de ton TP</h2>
+                <div id="conteneurFrame">
+                    <div>
+                        <h5>Page Accueil</h5>
+                        <iframe src="../Accueil.html" frameborder="1" id="pageAccueil"></iframe>
+                    </div>
+                    <div>
+                        <h5>Page Recherche</h5>
+                        <iframe src="../Recherche.html" frameborder="1" id="pageRecherche"></iframe>
+                    </div>
+                    <div>
+                        <h5>Page Detail</h5>
+                        <iframe src="../Detail.html" frameborder="1" id="pageDetail"></iframe>
+                    </div>
+                    <div>
+                        <h5>Page Favoris</h5>
+                        <iframe src="../Favoris.html" frameborder="1" id="pageFavoris"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-5">
+            <div class="col">
+                <h2>Évaluation des spécifications générales - HTML</h2>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th style="width: 60%;">
+                                Spécification
+                            </th>
+                            <th style="width: 40%;">
+                                Analyse
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                Vos documents doivent débuter par le DOCTYPE HTML5
+                            </td>
+                            <td>
+                                <div id="resultatcheckDoctype"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Le validateur W3C ne doit pas détecter d'erreurs sur vos 4 pages
+                            </td>
+                            <td>
+                                <div id="resultatvalidateurW3C" class="manuel">doit être vérifié manuellement</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                L'élément BODY doit contenir comme enfants directs uniquement <br>
+                                des éléments avec une forte sémantique (HEADER,MAIN,FOOTER)
+                            </td>
+                            <td>
+                                <div id="resultatTestStructureBody"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                L'élément HEAD doit contenir l'élément TITLE et les META appropriées
+                            </td>
+                            <td>
+                                <div id="resultatTestTitleAndMetaPresentOnEachPage"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Les éléments suivants doivent également être utilisés : <br>
+                                IMG, UL ou OL, A, P, H1, H2, DIV, SPAN
+                            </td>
+                            <td>
+                                <div id="resultatAllBasicElementPresent"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                La structure du répertoire de travail doit être respectée <br>
+                                (dossier images / dossier css)
+                            </td>
+                            <td>
+                                <div id="resultatFolderCSSandImagesUsed"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Toutes les images de votre site Web doivent être à l’intérieur <br>
+                                du dossier images (incluant celles de vos entités)
+                            </td>
+                            <td>
+                                <div id="resultatAllImageLocal"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                L'élément HEADER doit contenir un NAV avec des liens permettant <br>
+                                de naviguer vers"Accueil.html","Recherche.html"et"Favoris.html"
+                            </td>
+                            <td>
+                                <div id="resultatNavEtLiens"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Le contenu des éléments HEADER et FOOTER doit être identique <br>
+                                sur vos 4 pages (uniquement le contenu de l'élément MAIN varie)
+                            </td>
+                            <td>
+                                <div id="resultatHeaderFooterIdentique"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Utiliser au moins 2 nouvelles balises HTML (non vu dans le cours) <br>
+                                ET mettre en commentaire À CÔTÉ leurs utilités DANS VOS MOTS
+                            </td>
+                            <td>
+                                <div id="resultatNouvellesBalisesHTML"></div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="row mt-5">
+            <div class="col">
+                <h2>Évaluation des spécifications générales - Bootstrap</h2>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th style="width: 60%;">
+                                Spécification
+                            </th>
+                            <th style="width: 40%;">
+                                Analyse
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                Inclure les bibliothèques nécessaires au bon fonctionnement de Bootstrap
+                            </td>
+                            <td>
+                                <div id="resultatBibliothequeBootstrapPresent"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Les enfants directs du body (header, main, footer) doivent être des conteneurs
+                            </td>
+                            <td>
+                                <div id="resultatEnfantDirectDuBodySontConteneur"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                La hiérarchie des éléments Bootstrap est respectée (container > row > col)
+                            </td>
+                            <td>
+                                <div id="resultatHierachieBootstrapRespecté"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Les 2 types de conteneurs ont été utilisés au moins une fois (container,
+                                container-fluid)
+                            </td>
+                            <td>
+                                <div id="resultat2TypeContainerUtiliser"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Les 3 types de colonnes ont été utilisés au moins une fois (col, col-X, col-auto)
+                            </td>
+                            <td>
+                                <div id="resultat3TypeColonneUtilisé"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Des rangées imbriquées ont été utilisées au moins une fois <br>
+                                (mettre une rangée à l'intérieur d'une colonne)
+                            </td>
+                            <td>
+                                <div id="resultatRangéeImbriquée"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Quelques images doivent être responsive (s'adapter à la grandeur du Viewport)
+                            </td>
+                            <td>
+                                <div id="resultatImageResponsive"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                Lors d'un changement de taille de viewport entrainant une transition entre le mode "xs"
+                                et le mode
+                                "md" :
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="px-5">
+                                Certaines colonnes changent de configuration de taille <br> 
+                                (en utilisant uniquement des classes Bootstrap)
+                            </td>
+                            <td>
+                                <div id="resultatChangementTailleXsVersMd"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="px-5">
+                                Certains alignements de texte changent de configuration <br> 
+                                (en utilisant uniquement des classes Bootstrap)
+                            </td>
+                            <td>
+                                <div id="resultatChangementAlignementTexetXsVersMd"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="px-5">
+                                Certains éléments changent d'ordre d'affichage <br> 
+                                (en utilisant uniquement des classes Bootstrap)
+                            </td>
+                            <td>
+                                <div id="resultatChangementOrdreXsVersMd"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="px-5">
+                                Certains éléments disparaissent ou apparaissent <br> 
+                                (en utilisant uniquement des classes Bootstrap)
+                            </td>
+                            <td>
+                                <div id="resultatChangementVisibilitéXsVersMd"></div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="row mt-5">
+            <h2>Évaluation des spécifications générales - CSS</h2>
+            <div class="col">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th style="width: 60%;">
+                                Spécification
+                            </th>
+                            <th style="width: 40%;">
+                                Analyse
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                Aucun style CSS provenant d'internet n’est accepté <br> 
+                                (mis à part les bibliothèques Bootstrap et FontAwesome)
+                            </td>
+                            <td>
+                                <div id="resultatAucunStyleProvenantInternet" class="manuel">
+                                    doit être vérifié manuellement
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Les règles de style que vous créées doivent être placées dans <br>
+                                un seul et même fichier CSS (aucun style inline/intraligne accepté)
+                            </td>
+                            <td>
+                                <div id="resultatStylePresentUnSeulFichierCSS"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Au moins 5 types de sélecteurs différents ont été utilisés
+                            </td>
+                            <td>
+                                <div id="resultat5typeDeSelecteurs"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Au moins un effet de transition d'une propriété CSS
+                            </td>
+                            <td>
+                                <div id="resultatAuMoinsUnEffetDeTransition"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Au moins une requête média doit être utilisée
+                            </td>
+                            <td>
+                                <div id="resultatAuMoinsUneRequeteMediaDoitEtreUtilise"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Le positionnement relatif, absolute et fixed ont été utilisés au moins une fois
+                            </td>
+                            <td>
+                                <div id="resultatToutesLesTypesDePositionnementUtilisée"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Inclure la bibliothèque nécessaire à l'utilisation  <br>
+                                de la bibliothèque d'images FontAwesome
+                            </td>
+                            <td>
+                                <div id="resultatInclureBibliothequeFontawesome"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Au moins 4 icônes provenant de la bibliothèque FontAwesome doivent être utilisées
+                            </td>
+                            <td>
+                                <div id="resultat4IconesFontawesome"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Utiliser au moins 3 nouvelles propriétés CSS (non vu dans le cours) + <br>
+                                Mettre en commentaire À CÔTÉ leurs utilitées DANS VOS MOTS
+                            </td>
+                            <td>
+                                <div id="resultat3NouvellesProprietes"></div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        
+        <div class="row mt-5">
+            <div class="col">
+                <h2>Spécifications propres à la page : Accueil.html</h2>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th style="width: 60%;">
+                                Spécification
+                            </th>
+                            <th style="width: 40%;">
+                                Analyse
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Les informations des 3 entités parents sont présentées de manière élégante</td>
+                            <td>
+                                <div id="resultatAccueil1"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Des statistiques basées sur les entités enfants des entités parents sont présentées</td>
+                            <td>
+                                <div id="resultatAccueil2"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>En mode "xs" et "sm" : <br> les entités parents doivent être présentées les uns en dessous des autres (à
+                                l’aide de Bootstrap)</td>
+                            <td>
+                                <div id="resultatAccueil3"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>En mode "md" et plus : <br> les entités parents doivent être présentés l'un à côté de l'autre (à l’aide
+                                de Bootstrap)</td>
+                            <td>
+                                <div id="resultatAccueil4"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Cliquez sur les informations d’un entité parent te redirige vers la page « Recherche.html »</td>
+                            <td>
+                                <div id="resultatAccueil5"></div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            
+            </div>
+        </div>
+        
+        <div class="row mt-5">
+            <div class="col">
+                <h2>Spécifications propres à la page : Recherche.html</h2>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th style="width: 60%;">
+                                Spécification
+                            </th>
+                            <th style="width: 40%;">
+                                Analyse
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td colspan="2">Par rapport à la liste de résultat :</td>
+                        </tr>
+                        <tr>
+                            <td class="px-4">En mode "xs" et "sm" : les entités enfants doivent être présentés <br>les uns en dessous des autres (à l’aide de Bootstrap)</td>
+                            <td>
+                                <div id="resultatRecherche1"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="px-4">En mode "md" et plus : les entités enfants doivent être présentés <br>l’un à côté de l'autre (3 par lignes) (à l’aide de Bootstrap)</td>
+                            <td>
+                                <div id="resultatRecherche2"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">Les entités enfants doivent au minimum : </td>
+                        </tr>
+                        <tr>
+                            <td class="px-5">Posséder une bordure</td>
+                            <td>
+                                <div id="resultatRecherche3"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="px-5">Contenir l'image et le nom de l’entité enfant</td>
+                            <td>
+                                <div id="resultatRecherche4"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="px-5">Être cliquable (et apporter vers la page "Detail.html")</td>
+                            <td>
+                                <div id="resultatRecherche5"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">Par rapport au formulaire de recherche :</td>
+                        </tr>
+                        <tr>
+                            <td class="px-4">Il doit comporter 4 critères de recherche exactement</td>
+                            <td>
+                                <div id="resultatRecherche6"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="px-5">Il doit y avoir un filtre basé sur une propriété de type « texte » <br>en lien avec les entités enfants</td>
+                            <td>
+                                <div id="resultatRecherche7"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="px-5">Il doit y avoir un filtre basé sur une propriété de type « numérique » <br>en lien avec les entités enfants</td>
+                            <td>
+                                <div id="resultatRecherche8"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="px-5">Il doit y avoir une liste déroulante portant sur type « booléen » <br>en lien avec les entités enfants (Peu importe/Oui/Non)</td>
+                            <td>
+                                <div id="resultatRecherche9"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="px-5">
+                                Il doit y avoir des inputs de type « checkbok » <br>pour représenter les entités parents (coché par défaut)
+                            </td>
+                            <td>
+                                <div id="resultatRecherche10"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Il doit avoir un bouton pour réinitialiser le formulaire (le bouton doit être fonctionnel)
+                            </td>
+                            <td>
+                                <div id="resultatRecherche11"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Il doit avoir un bouton pour lancer la recherche (soumettre le formulaire)
+                            </td>
+                            <td>
+                                <div id="resultatRecherche12"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Les données soumises par le formulaire doivent être envoyées par POST à l'adresse https://www.w3schools.com/action_page.php
+                            </td>
+                            <td>
+                                <div id="resultatRecherche13"></div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="row mt-5">
+            <div class="col">
+                
+                <h2>Spécifications propres à la page : Detail.html</h2>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th style="width: 60%;">
+                                Spécification
+                            </th>
+                            <th style="width: 40%;">
+                                Analyse
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                Toutes les informations en lien avec l'entité enfant sont présentées à l'utilisateur (l'image de l'entité incluse)
+                            </td>
+                            <td>
+                                <div id="resultatDetail1"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Au minimum, le nom de l’entité parent doit être présentés à l’utilisateur
+                            </td>
+                            <td>
+                                <div id="resultatDetail2"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Un composant Bootstrap (autre qu'un simple bouton) est utilisé <br>(voir la section component : <a href="https://getbootstrap.com/docs/5.3/components/">https://getbootstrap.com/docs/5.3/components/</a>
+                            </td>
+                            <td>
+                                <div id="resultatDetail3"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Il doit y avoir un formulaire avec un bouton simple permettant l'envoi du formulaire <br>(pour ajouter l’entité à la liste des favoris) :</td>
+                            <td>
+                                <div id="resultatDetail4"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="px-4">Un champ input hidden avec le name "nom" et le nom de votre entité enfant</td>
+                            <td>
+                                <div id="resultatDetail5"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="px-4">Un bouton pour soumettre le formulaire avec comme <br> enfant l'icône à l'intérieur et un texte (ex : ajouté)</td>
+                            <td>
+                                <div id="resultatDetail6"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="px-4">Les données soumis par le formulaire doivent être envoyées <br>par POST à l'adresse <a href="https://www.w3schools.com/action_page.php">https://www.w3schools.com/action_page.php</a></td>
+                            <td>
+                                <div id="resultatDetail7"></div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        
+        <div class="row mt-5">
+            <div class="col">
+                
+                <h2>Spécifications propres à la page : Favoris.html</h2>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th style="width: 60%;">
+                                Spécification
+                            </th>
+                            <th style="width: 40%;">
+                                Analyse
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                Le nombre d'éléments en favoris est affiché quelque part dans la page
+                            </td>
+                            <td>
+                                <div id="resultatFavoris1"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Les éléments en favoris sont présentés sous forme de tableau :
+                            </td>
+                            <td>
+                                <div id="resultatFavoris2"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="px-4">
+                                Le tableau doit afficher les lignes impaires d'une couleur différente (avec l'aide de Bootstrap)
+                            </td>
+                            <td>
+                                <div id="resultatFavoris3"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td  class="px-4">Le tableau est un tableau adaptatif (avec l'aide de Bootstrap)</td>
+                            <td>
+                                <div id="resultatFavoris4"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="px-4">Le tableau doit contenir au minimum les informations suivantes : </td>
+                            <td>
+                                <div id="resultatFavoris5"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="px-5">Le nom de l'entité parent</td>
+                            <td>
+                                <div id="resultatFavoris6"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="px-5">Le nom de l'entité enfant (dois être cliquable et apporter à la page detail.html)</td>
+                            <td>
+                                <div id="resultatFavoris7"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="px-5">L'image représentant l'entité enfant</td>
+                            <td>
+                                <div id="resultatFavoris8"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="px-4">Un formulaire par entité enfant avec un bouton simple permettant l'envoi du formulaire <br>(pour retirer l’entité de la liste des favoris)</td>
+                            <td>
+                                <div id="resultatFavoris9"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="px-4" colspan="2">Les formulaires doivent contenir uniquement deux éléments : </td>
+                        </tr>
+                        <tr>
+                            <td class="px-5">Un champ input hidden avec le name "nom" et le nom de votre entité enfant</td>
+                            <td>
+                                <div id="resultatFavoris11"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="px-5">Un bouton pour soumettre le formulaire</td>
+                            <td>
+                                <div id="resultatFavoris12"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="px-4">Les données soumis par le formulaire doivent être envoyées par POST à l'adresse <a href="https://www.w3schools.com/action_page.php">https://www.w3schools.com/action_page.php</a>
+                            </td>
+                            <td>
+                                <div id="resultatFavoris13"></div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>    
+    <script src="js/dist/bundle.js"></script>
+</body>
+
+</html>
