@@ -621,7 +621,16 @@ function validateBootstrapHierarchy() {
                 }
 
                 const rowChildren = Array.from(child.children);
-                const columnClasses = ['col', 'col-auto', ...Array.from({ length: 12 }, (_, i) => `col-${i + 1}`)];
+                const columnClasses = [
+                    'col', 'col-sm', 'col-md', 'col-lg', 'col-xl', 'col-xxl',
+                    'col-auto', 'col-sm-auto', 'col-md-auto', 'col-lg-auto', 'col-xl-auto', 'col-xxl-auto',
+                    ...Array.from({ length: 12 }, (_, i) => `col-${i + 1}`),
+                    ...Array.from({ length: 12 }, (_, i) => `col-sm-${i + 1}`),
+                    ...Array.from({ length: 12 }, (_, i) => `col-md-${i + 1}`),
+                    ...Array.from({ length: 12 }, (_, i) => `col-lg-${i + 1}`),
+                    ...Array.from({ length: 12 }, (_, i) => `col-xl-${i + 1}`),
+                    ...Array.from({ length: 12 }, (_, i) => `col-xxl-${i + 1}`)
+                  ];
                 rowChildren.forEach(rowChild => {
                     if (!columnClasses.some(cls => rowChild.classList.contains(cls))) {
                         const message = `${iframe.id} : la hiérarchie container > row > col non-respectée`;
@@ -883,7 +892,9 @@ function checkTextAlignmentChangeXsToMd() {
     const iframes = document.querySelectorAll('iframe');
     let alignmentChangeDetected = false;
 
-    const textAlignMdClasses = ['text-md-left', 'text-md-center', 'text-md-right', 'text-md-start', 'text-md-end'];
+    const textAlignMdClasses = ['text-md-left', 'text-md-center', 'text-md-right', 'text-md-start', 'text-md-end',
+                                'text-sm-left', 'text-sm-center', 'text-sm-right', 'text-sm-start', 'text-sm-end'
+    ];    
 
     iframes.forEach(iframe => {
         const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
@@ -917,7 +928,9 @@ function checkOrderChangeXsToMd() {
     const iframes = document.querySelectorAll('iframe');
     let orderChangeDetected = false;
 
-    const orderMdClasses = ['order-md-first', 'order-md-last', ...Array.from({ length: 6 }, (_, i) => `order-md-${i}`)];
+    const orderMdClasses = ['order-md-first', 'order-md-last', ...Array.from({ length: 6 }, (_, i) => `order-md-${i}`),
+                            'order-sm-first', 'order-sm-last', ...Array.from({ length: 6 }, (_, i) => `order-sm-${i}`)
+    ];
 
     iframes.forEach(iframe => {
         const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
@@ -951,7 +964,8 @@ function checkVisibilityChangeXsToMd() {
     const iframes = document.querySelectorAll('iframe');
     let visibilityChangeDetected = false;
 
-    const visibilityMdClasses = ['d-md-none', 'd-md-flex', 'd-md-block', 'd-md-inline', 'd-md-flex', 'd-md-grid', 'd-md-none'];
+    const visibilityMdClasses = ['d-md-none', 'd-md-flex', 'd-md-block', 'd-md-inline', 'd-md-flex', 'd-md-grid', 'd-md-none',
+                                 'd-sm-none', 'd-sm-flex', 'd-sm-block', 'd-sm-inline', 'd-sm-flex', 'd-sm-grid', 'd-sm-none',];
 
     iframes.forEach(iframe => {
         const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
