@@ -107,15 +107,23 @@ async function verifierToutesLesTypesDePositionnementUtilisée() {
             }
         });
         
-        if (hasRelative && hasAbsolute && hasFixed && hasAbsoluteWithPosition) {
-            resultatToutesLesTypesDePositionnementUtilisée.innerText = 'positionnements avec les propriétés de nécessaires trouvés';
-            resultatToutesLesTypesDePositionnementUtilisée.className = "valid";
-        } if (hasRelative && hasAbsolute && hasFixed && !hasAbsoluteWithPosition ) {
-            resultatToutesLesTypesDePositionnementUtilisée.innerText = 'positionnement absolute sans left, right, top ou bottom trouvé';
-            resultatToutesLesTypesDePositionnementUtilisée.className = "valid";
-        } else {
-            resultatToutesLesTypesDePositionnementUtilisée.innerText = 'positionnements manquants';
+        resultatToutesLesTypesDePositionnementUtilisée.innerHTML = ''; // Clear previous results
+        if (!hasRelative) {
+            resultatToutesLesTypesDePositionnementUtilisée.innerHTML += 'positionnement relatif non-trouvé <br>';
             resultatToutesLesTypesDePositionnementUtilisée.className = "invalid";
+        } 
+        if (!hasFixed) {
+            resultatToutesLesTypesDePositionnementUtilisée.innerHTML += 'positionnement fixed non-trouvé <br>';
+            resultatToutesLesTypesDePositionnementUtilisée.className = "invalid";
+        } 
+        if (!hasFixed || !hasAbsoluteWithPosition ) {
+            resultatToutesLesTypesDePositionnementUtilisée.innerHTML += 'positionnement absolute non-trouvé ou sans left, right, top ou bottom <br>';
+            resultatToutesLesTypesDePositionnementUtilisée.className = "invalid";
+        } 
+
+        if (hasRelative && hasAbsolute && hasFixed && hasAbsoluteWithPosition) {
+            resultatToutesLesTypesDePositionnementUtilisée.innerHTML = 'positionnements avec les propriétés de nécessaires trouvés';
+            resultatToutesLesTypesDePositionnementUtilisée.className = "valid";
         } 
 
     }, resultatToutesLesTypesDePositionnementUtilisée);
@@ -227,7 +235,6 @@ async function validateIframeContent() {
             const response = await axios.get(iframe.src);
             const htmlContent = response.data;
             const validationResult = await validateHTML(htmlContent);
-            console.log(`Validation result for ${iframe.src}:`, validationResult);
             if (validationResult.messages.length > 0) {
                 results.push(iframe.id + " - erreur détectée sur la page");
                 let valid = false;
@@ -676,7 +683,6 @@ function checkContainerClassesUsage() {
         }
     });
 
-    console.log(containerUsed);
     if (!containerUsed) {
         const message = "la classe .container n'a pas été utilisée";
         const messageElement = document.createElement('div');
@@ -684,7 +690,6 @@ function checkContainerClassesUsage() {
         resultDiv.appendChild(messageElement);
     }
 
-    console.log(containerFluidUsed);
     if (!containerFluidUsed) {
         const message = "la classe .container-fluid n'a pas été utilisée";
         const messageElement = document.createElement('div');
@@ -718,20 +723,14 @@ function checkColumnClassesUsage() {
         for (let bp of breakpoints) {
             if (iframeDoc.querySelector(`.col${bp ? `-${bp}` : ''}`)) {
                 colUsed = true;
-                break;
             }
-            if (iframeDoc.querySelector(`.col-auto${bp ? `-${bp}` : ''}`)) {
+            if (iframeDoc.querySelector(`.col${bp ? `-${bp}` : ''}-auto`)) {
                 colAutoUsed = true;
-                break;
             }
             for (let i = 1; i <= 12; i++) {
                 if (iframeDoc.querySelector(`.col${bp ? `-${bp}` : ''}-${i}`)) {
                     colSizeUsed = true;
-                    break;
                 }
-            }
-            if (colUsed || colAutoUsed || colSizeUsed) {
-                break;
             }
         }
     });
@@ -777,7 +776,16 @@ function checkNestedRows() {
 
     iframes.forEach(iframe => {
         const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
-        const columnClasses = ['col', 'col-auto', ...Array.from({ length: 12 }, (_, i) => `col-${i + 1}`)];
+        const columnClasses = [
+            'col', 'col-sm', 'col-md', 'col-lg', 'col-xl', 'col-xxl',
+            'col-auto', 'col-sm-auto', 'col-md-auto', 'col-lg-auto', 'col-xl-auto', 'col-xxl-auto',
+            ...Array.from({ length: 12 }, (_, i) => `col-${i + 1}`),
+            ...Array.from({ length: 12 }, (_, i) => `col-sm-${i + 1}`),
+            ...Array.from({ length: 12 }, (_, i) => `col-md-${i + 1}`),
+            ...Array.from({ length: 12 }, (_, i) => `col-lg-${i + 1}`),
+            ...Array.from({ length: 12 }, (_, i) => `col-xl-${i + 1}`),
+            ...Array.from({ length: 12 }, (_, i) => `col-xxl-${i + 1}`)
+          ];
 
         columnClasses.forEach(colClass => {
             const columns = iframeDoc.querySelectorAll(`.${colClass}`);
@@ -811,28 +819,27 @@ function checkNestedRows() {
 function checkResponsiveImages() {
     const resultDiv = document.getElementById('resultatImageResponsive');
     resultDiv.innerHTML = ''; // Clear previous results
-    let valid = true;
+    let valid = false;
 
     const iframes = document.querySelectorAll('iframe');
 
     iframes.forEach(iframe => {
         const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
         const images = iframeDoc.querySelectorAll('img.img-fluid');
-
-        if (images.length == 0) {
-            const messageElement = document.createElement('div');
-            messageElement.textContent = `${iframe.id} : aucune image fluid trouvée`;
-            resultDiv.appendChild(messageElement);
-            valid = false
-        } else {
-            const messageElement = document.createElement('div');
-            messageElement.textContent = `${iframe.id} : images fluid trouvées`;
-            resultDiv.appendChild(messageElement);
-            valid = true
+        if (images.length >= 0) {
+            valid = true;
         }
     });
 
-    resultDiv.className = valid ? "valid" : "invalid";
+    const messageElement = document.createElement('div');
+    if(valid) {
+        messageElement.textContent = `images fluid trouvées`;
+        resultDiv.className = "valid";
+    } else {
+        messageElement.textContent = `aucune image fluid trouvée`;
+        resultDiv.className = "invalid";
+    }
+    resultDiv.appendChild(messageElement);
 }
 
 function checkSizeChangeXsToMd() {
@@ -1017,8 +1024,8 @@ function verifierStyles() {
             results.push(`${iframeId} : style inline détecté sur un ou plusieurs éléments`);
         }
 
-        // Vérifier les balises <style>
-        const styleTags = doc.querySelectorAll('style');
+        // Vérifier ka présence de balises <style> (ne pas prendre en compte les balises avec le id ="fa-", car injecté par fontawesome si utilisation du .js)
+        const styleTags = doc.querySelectorAll('style:not([id^="fa-"])')
         if (styleTags.length > 0) {
             results.push(`${iframeId} : style sous forme de balise <style> détecté`);
         }
@@ -1042,10 +1049,17 @@ function checkFontAwesomeInIframes() {
     iframes.forEach((iframe) => {
         const iframeDocument = iframe.contentDocument || iframe.contentWindow.document;
         const linkElements = iframeDocument.querySelectorAll('link');
+        const scriptElements = iframeDocument.querySelectorAll('script');
         let fontAwesomeFound = false;
 
         linkElements.forEach((link) => {
             if (link.href.includes('fontawesome') || link.href.includes('font-awesome')) {
+                fontAwesomeFound = true;
+            }
+        });
+
+        scriptElements.forEach((link) => {
+            if (link.src.includes('fontawesome') || link.src.includes('font-awesome')) {
                 fontAwesomeFound = true;
             }
         });
@@ -1179,19 +1193,37 @@ function verifierFormulairePageRecherche() {
             document.getElementById('resultatRecherche11').className = 'invalid';
         }
 
-        const inputs = formulaire.querySelectorAll('input, select');
+        const inputsInForm = formulaire.querySelectorAll('input, select');
         let allInputsHaveName = true;
-        inputs.forEach(input => {
+        inputsInForm.forEach(input => {
             if (!input.hasAttribute('name')) {
                 allInputsHaveName = false;
             }
         });
 
-        if (formulaire.method.toLowerCase() === 'post' && formulaire.action === 'https://www.w3schools.com/action_page.php' && allInputsHaveName) {
+        let allInputsAreInTheForm = true;
+        const inputsInDocument = doc.querySelectorAll('input, select');
+        if(inputsInDocument.length !== inputsInForm.length) {
+            allInputsAreInTheForm = false;
+        }
+
+
+
+        const inputsExceptRadio = formulaire.querySelectorAll('input:not([type="radio"]), select');
+        let allInputsExcepRadioUniqueName = true;
+        let namesInputsExceptRadio = new Set();
+        inputsExceptRadio.forEach(input => {
+            namesInputsExceptRadio.add(input.getAttribute('name'));
+        });
+        if(namesInputsExceptRadio.size !== inputsExceptRadio.length) {
+            allInputsExcepRadioUniqueName = false;
+        }
+
+        if (formulaire.method.toLowerCase() === 'post' && formulaire.action === 'https://www.w3schools.com/action_page.php' && allInputsHaveName && allInputsExcepRadioUniqueName && allInputsAreInTheForm) {
             document.getElementById('resultatRecherche13').innerText = 'Formulaire envoie par POST à la bonne URL et tous les champs ont des attributs name';
             document.getElementById('resultatRecherche13').className = 'valid';
         } else {
-            document.getElementById('resultatRecherche13').innerText = 'Formulaire n\'envoie pas par POST à la bonne URL ou tous les champs n\'ont pas des attributs name';
+            document.getElementById('resultatRecherche13').innerText = 'Formulaire n\'envoie pas par POST à la bonne URL ET/OU tous les champs n\'ont pas des attributs name ET/OU réutilisation interdite de la même valeur pour l\'attribut "name" sur plusieurs inputs/selects différents ET/OU tous les inputs ne sont pas dans le formulaire';
             document.getElementById('resultatRecherche13').className = 'invalid';
         }
     } else {
@@ -1461,6 +1493,6 @@ window.onload = () => {
     calculresultatFavoris11();
     calculresultatFavoris12();
     calculresultatFavoris13();
-    version.innerText = "Version 1.6";
+    version.innerText = "Version 1.7";
     dateheureversion.innerText = "2025-02-26 15H35";
 }
